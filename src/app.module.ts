@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersModule } from './users/users.module';
 import { LeaguesModule } from './leagues/leagues.module';
-import { StagesController } from './stages/stages.controller';
 import { StagesModule } from './stages/stages.module';
+import { RacesModule } from './races/races.module';
 import config from './config/keys';
 
 @Module({
@@ -13,7 +13,8 @@ import config from './config/keys';
     UsersModule,
     MongooseModule.forRoot(config.mongoURI, { useNewUrlParser: true,  useUnifiedTopology: true, useFindAndModify: false}),
     LeaguesModule,
-    StagesModule ],
+    StagesModule,
+    RacesModule ],
   controllers: [AppController],
   providers: [AppService],
 })
