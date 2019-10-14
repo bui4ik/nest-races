@@ -13,6 +13,11 @@ export class UsersController {
     return this.usersService.getAllUsersWithRaces();
   }
 
+  @Get('/byLeagues')
+  getAllUsersWithLeagues(): Promise<any> {
+    return this.usersService.getAllUsersWithLeagues();
+}
+
   @Get()
   findAllUsers(): Promise<User[]> {
      return this.usersService.findAllUsers();

@@ -3,11 +3,15 @@ import { Model } from 'mongoose';
 import { League } from './interfaces/league.interface';
 import { User } from 'src/users/interfaces/user.interface';
 import { InjectModel } from '@nestjs/mongoose';
+import { Stage } from '../stages/interfaces/stage.interface';
+import { Race } from '../races/interfaces/race.interface';
 
 @Injectable()
 export class LeaguesService {
   constructor(@InjectModel('League')private readonly leagueModel: Model <League>,
-              @InjectModel('User')private readonly userModel: Model <User>) {}
+              @InjectModel('User')private readonly userModel: Model <User>,
+              @InjectModel('Stage')private readonly stageModel: Model <Stage>,
+              @InjectModel('Race')private readonly raceModel: Model <Race>) {}
 
   async findAllLeagues(): Promise<League[]> {
     return await this.leagueModel.find();
@@ -27,8 +31,13 @@ export class LeaguesService {
   }
 
   async deleteLeague(id: string): Promise<League> {
-    // change after all
-    return await this.leagueModel.findByIdAndRemove(id);
+    const stages = await this.stageModel.find({ leagueId: id });
+    const stagesId = stages.map(stage => stage.id);
+    for (let i = 0; i <= stagesId.length; i++) {
+      await this.raceModel.deleteMany({ stageId: stagesId[i] });
+    }
+    await this.stageModel.deleteMany({ leagueId: id });
+    return await this.leagueModel.deleteOne({ _id: id });
   }
 
   async addUserToLeague(id: string, userId: string): Promise<League> {
