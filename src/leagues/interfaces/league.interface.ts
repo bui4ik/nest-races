@@ -3,5 +3,5 @@ export interface League {
   title: string;
   description: string;
   season: string;
-  users: string[];
+  users?: string[];
 }
