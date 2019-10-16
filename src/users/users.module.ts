@@ -9,5 +9,6 @@ import { RaceSchema } from '../races/schemas/races.schema';
   imports: [MongooseModule.forFeature([{name: 'User', schema: UserSchema}, {name: 'Race', schema: RaceSchema}])],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [ UsersService ],
 })
 export class UsersModule {}

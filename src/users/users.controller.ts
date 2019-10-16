@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './interfaces/user.interface';
 import { UsersWithRaces } from './interfaces/usersWithRaces.interface';
 import { ApiOperation, ApiUseTags, ApiImplicitParam, ApiCreatedResponse, ApiResponse } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiUseTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('/byRaces')
   @ApiOperation({title: 'Get users with race'})
   getAllUsersWithRaces(): Promise<UsersWithRaces> {
