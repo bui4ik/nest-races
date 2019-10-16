@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { LeaguesModule } from './leagues/leagues.module';
 import { StagesModule } from './stages/stages.module';
 import { RacesModule } from './races/races.module';
+import { AuthModule } from './auth/auth.module';
 import config from './config/keys';
 
 @Module({
@@ -14,7 +15,8 @@ import config from './config/keys';
     MongooseModule.forRoot(config.mongoURI, { useNewUrlParser: true,  useUnifiedTopology: true, useFindAndModify: false}),
     LeaguesModule,
     StagesModule,
-    RacesModule ],
+    RacesModule,
+    AuthModule ],
   controllers: [AppController],
   providers: [AppService],
 })
